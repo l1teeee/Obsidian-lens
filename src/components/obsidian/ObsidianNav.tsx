@@ -137,13 +137,13 @@ export default function ObsidianNav() {
                         style={{ opacity: 0 }}
                         className="flex items-center gap-3 md:gap-5"
                     >
-                        <button className="hidden text-sm font-medium text-[#adaaaa] transition-colors duration-300 hover:text-[#f3e6ff] md:block">
+                        <a href="/login" className="hidden text-sm font-medium text-[#adaaaa] transition-colors duration-300 hover:text-[#f3e6ff] md:block">
                             Login
-                        </button>
+                        </a>
 
-                        <button className="rounded-xl bg-[#d394ff] px-5 py-2.5 text-sm font-bold text-[#4a0076] shadow-[0_0_24px_rgba(211,148,255,0.18)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_34px_rgba(211,148,255,0.32)] active:scale-[0.98]">
+                        <a href="/register" className="rounded-xl bg-[#d394ff] px-5 py-2.5 text-sm font-bold text-[#4a0076] shadow-[0_0_24px_rgba(211,148,255,0.18)] transition-all duration-300 hover:scale-[1.03] hover:shadow-[0_0_34px_rgba(211,148,255,0.32)] active:scale-[0.98]">
                             Get Started
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
