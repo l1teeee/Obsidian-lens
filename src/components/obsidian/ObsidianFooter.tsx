@@ -134,18 +134,6 @@ export default function ObsidianFooter() {
           <div className="flex flex-col items-start justify-between gap-14 md:flex-row">
             <div ref={brandRef} className="max-w-xs space-y-6">
               <div className="flex items-center gap-2.5">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-[#d394ff] to-[#aa30fa]">
-                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                    <circle cx="7" cy="7" r="3" fill="#4a0076" />
-                    <circle
-                        cx="7"
-                        cy="7"
-                        r="6"
-                        stroke="#4a0076"
-                        strokeWidth="1.5"
-                    />
-                  </svg>
-                </div>
                 <span className="font-headline text-lg font-bold tracking-tight text-[#e5e2e1]">
                 Obsidian Lens
               </span>
