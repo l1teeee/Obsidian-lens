@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+.obsidian-preload {
+  opacity: 0;
+  filter: blur(16px);
+  transform: translateY(24px) scale(0.985);
+  will-change: opacity, filter, transform;
+}
 
 @theme {
   --color-black: #000000;
