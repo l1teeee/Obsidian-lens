@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+
+@theme {
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-headline: "Manrope", system-ui, sans-serif;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ── Obsidian Lens Design Tokens ─────────────────────── */
+  --color-surface:              #0e0e0e;
+  --color-surface-dim:          #0e0e0e;
+  --color-surface-bright:       #2c2c2c;
+  --color-surface-container-lowest: #000000;
+  --color-surface-container-low:    #131313;
+  --color-surface-container:        #1a1919;
+  --color-surface-container-high:   #201f1f;
+  --color-surface-container-highest:#262626;
+  --color-surface-variant:      #262626;
+
+  --color-primary:              #d394ff;
+  --color-primary-dim:          #aa30fa;
+  --color-primary-container:    #cb80ff;
+  --color-primary-fixed:        #cb80ff;
+  --color-primary-fixed-dim:    #c26bff;
+  --color-on-primary:           #4a0076;
+  --color-on-primary-container: #39005c;
+  --color-inverse-primary:      #9100e0;
+
+  --color-secondary:            #e5e2e1;
+  --color-secondary-dim:        #d6d4d3;
+  --color-secondary-container:  #474746;
+  --color-on-secondary:         #525151;
+  --color-on-secondary-container: #d2d0cf;
+
+  --color-tertiary:             #ff8b9a;
+  --color-tertiary-dim:         #f47788;
+  --color-tertiary-container:   #f7798b;
+  --color-on-tertiary:          #62041f;
+  --color-on-tertiary-container: #4d0015;
+
+  --color-error:                #ff6e84;
+  --color-error-dim:            #d73357;
+  --color-error-container:      #a70138;
+  --color-on-error:             #490013;
+  --color-on-error-container:   #ffb2b9;
+
+  --color-on-surface:           #ffffff;
+  --color-on-surface-variant:   #adaaaa;
+  --color-on-background:        #ffffff;
+  --color-background:           #0e0e0e;
+
+  --color-outline:              #777575;
+  --color-outline-variant:      #494847;
+  --color-surface-tint:         #d394ff;
+  --color-inverse-surface:      #fcf8f8;
+  --color-inverse-on-surface:   #565554;
+}
+
+/* ─── Fonts ───────────────────────────────────────────────── */
+.font-headline {
+  font-family: var(--font-headline);
+}
+
+html {
+  background: #000;
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #fff;
+  color: #000;
+}
+
+/* Hide system cursor when pointer is fine (mouse/trackpad) */
+@media (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 2px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ─── Cursor ──────────────────────────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  mix-blend-mode: difference;
+}
+
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  will-change: transform;
+  transition: transform 0.12s var(--ease-smooth);
+  mix-blend-mode: difference;
+}
+
+/* ─── Hero canvas ─────────────────────────────────────────── */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ─── Works list ──────────────────────────────────────────── */
+.works-row {
+  will-change: transform;
+}
+
+/* ─── Section divider ─────────────────────────────────────── */
+.section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
