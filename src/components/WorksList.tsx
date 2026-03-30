@@ -1,6 +1,10 @@
 'use client';
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useRef } from 'react';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { useGSAP } from '../hooks/useGSAP';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const WORKS = [
   {
@@ -41,26 +45,145 @@ const WORKS = [
 ];
 
 export default function WorksList() {
-  const [hovered, setHovered] = useState<number | null>(null);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-  const containerRef = useRef<HTMLDivElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
+  const previewImgRef = useRef<HTMLImageElement>(null);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const isShowingRef = useRef(false);
 
-  function handleMouseMove(e: React.MouseEvent) {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (rect) {
-      setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  const sectionRef = useGSAP<HTMLElement>(() => {
+    // ── Header entrance ─────────────────────────────────────
+    gsap.from('.works-header', {
+      opacity: 0,
+      y: 16,
+      duration: 0.9,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: '#work',
+        start: 'top 82%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // ── Rows stagger up ──────────────────────────────────────
+    gsap.from('.work-row', {
+      opacity: 0,
+      y: 40,
+      duration: 1.1,
+      stagger: 0.09,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: '#work',
+        start: 'top 74%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+  }, []);
+
+  // ── Mouse tracking ─────────────────────────────────────────
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (!rect) return;
+
+    mouseRef.current = {
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    };
+
+    if (isShowingRef.current && previewRef.current) {
+      gsap.set(previewRef.current, {
+        x: mouseRef.current.x + 32,
+        y: mouseRef.current.y - 100,
+      });
     }
-  }
+  };
+
+  // ── Row hover — enter ──────────────────────────────────────
+  const handleRowEnter = (index: number) => {
+    const preview = previewRef.current;
+    const previewImg = previewImgRef.current;
+    if (!preview || !previewImg) return;
+
+    isShowingRef.current = true;
+    previewImg.src = WORKS[index].img;
+    previewImg.alt = WORKS[index].title;
+
+    // Snap preview to current mouse position immediately
+    gsap.set(preview, {
+      x: mouseRef.current.x + 32,
+      y: mouseRef.current.y - 100,
+    });
+
+    // Animate preview in
+    gsap.killTweensOf(preview);
+    gsap.fromTo(
+      preview,
+      { opacity: 0, scale: 0.88, y: 12 },
+      { opacity: 1, scale: 1, y: 0, duration: 0.42, ease: 'expo.out' },
+    );
+
+    // Dim all rows
+    gsap.to('.work-row', { opacity: 0.22, duration: 0.3, ease: 'power2.out' });
+
+    // Restore + shift hovered row
+    const rows = sectionRef.current?.querySelectorAll('.work-row');
+    if (!rows) return;
+    gsap.to(rows[index], { opacity: 1, duration: 0.3, ease: 'power2.out' });
+    gsap.to(rows[index].querySelector('.work-row-inner'), {
+      x: 10,
+      duration: 0.5,
+      ease: 'expo.out',
+    });
+    gsap.to(rows[index].querySelector('.work-arrow'), {
+      opacity: 0.8,
+      x: 4,
+      duration: 0.4,
+      ease: 'power2.out',
+    });
+  };
+
+  // ── Row hover — leave ──────────────────────────────────────
+  const handleRowLeave = (index: number) => {
+    const preview = previewRef.current;
+    if (!preview) return;
+
+    isShowingRef.current = false;
+
+    gsap.killTweensOf(preview);
+    gsap.to(preview, {
+      opacity: 0,
+      scale: 0.93,
+      y: 8,
+      duration: 0.3,
+      ease: 'power2.inOut',
+    });
+
+    // Restore all rows
+    gsap.to('.work-row', { opacity: 1, duration: 0.45, ease: 'power2.out' });
+
+    const rows = sectionRef.current?.querySelectorAll('.work-row');
+    if (!rows) return;
+    gsap.to(rows[index].querySelector('.work-row-inner'), {
+      x: 0,
+      duration: 0.45,
+      ease: 'expo.out',
+    });
+    gsap.to(rows[index].querySelector('.work-arrow'), {
+      opacity: 0.15,
+      x: 0,
+      duration: 0.4,
+      ease: 'power2.out',
+    });
+  };
 
   return (
     <section
       id="work"
-      ref={containerRef}
+      ref={sectionRef}
       onMouseMove={handleMouseMove}
       className="relative py-24 px-8 md:px-14"
     >
-      {/* Section label */}
-      <div className="flex items-center justify-between mb-14">
+      {/* Section header */}
+      <div className="works-header flex items-center justify-between mb-14">
         <span className="text-[0.62rem] tracking-[0.32em] uppercase text-white/20">
           Selected Work
         </span>
@@ -72,30 +195,22 @@ export default function WorksList() {
       {/* List rows */}
       <div>
         {WORKS.map((work, i) => (
-          <motion.div
+          <div
             key={work.num}
-            className="group border-t border-white/[0.08] last:border-b last:border-white/[0.08] cursor-pointer"
-            onHoverStart={() => setHovered(i)}
-            onHoverEnd={() => setHovered(null)}
+            className="work-row border-t border-white/[0.08] last:border-b last:border-white/[0.08] cursor-pointer"
+            onMouseEnter={() => handleRowEnter(i)}
+            onMouseLeave={() => handleRowLeave(i)}
           >
-            <motion.div
-              className="flex items-center gap-5 py-7 md:py-9"
-              animate={{ x: hovered === i ? 10 : 0 }}
-              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            >
+            <div className="work-row-inner flex items-center gap-5 py-7 md:py-9">
               {/* Number */}
               <span className="shrink-0 text-white/15 text-[0.62rem] tracking-widest font-mono w-7">
                 {work.num}
               </span>
 
               {/* Title */}
-              <motion.span
-                className="flex-1 text-white text-[clamp(1.5rem,3.8vw,3rem)] font-bold tracking-[-0.03em] leading-none"
-                animate={{ opacity: hovered !== null && hovered !== i ? 0.25 : 1 }}
-                transition={{ duration: 0.3 }}
-              >
+              <span className="flex-1 text-white text-[clamp(1.5rem,3.8vw,3rem)] font-bold tracking-[-0.03em] leading-none">
                 {work.title}
-              </motion.span>
+              </span>
 
               {/* Category */}
               <span className="hidden md:block shrink-0 text-white/20 text-[0.62rem] tracking-[0.2em] uppercase w-28 text-right">
@@ -108,46 +223,26 @@ export default function WorksList() {
               </span>
 
               {/* Arrow */}
-              <motion.span
-                className="shrink-0 text-white/20 ml-2"
-                animate={{
-                  x: hovered === i ? 5 : 0,
-                  opacity: hovered === i ? 1 : 0.2,
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                →
-              </motion.span>
-            </motion.div>
-          </motion.div>
+              <span className="work-arrow shrink-0 text-white/15 ml-2">→</span>
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* Floating preview image */}
-      <AnimatePresence>
-        {hovered !== null && (
-          <motion.div
-            key={hovered}
-            className="pointer-events-none absolute z-30"
-            style={{
-              left: mouse.x + 28,
-              top: mouse.y - 90,
-            }}
-            initial={{ opacity: 0, scale: 0.88, y: 14 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.93, y: 8 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <div className="w-[260px] h-[180px] overflow-hidden">
-              <img
-                src={WORKS[hovered].img}
-                alt={WORKS[hovered].title}
-                className="w-full h-full object-cover grayscale"
-              />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Floating preview image — GSAP-controlled, always in DOM */}
+      <div
+        ref={previewRef}
+        className="pointer-events-none absolute z-30 top-0 left-0 opacity-0"
+      >
+        <div className="w-[260px] h-[180px] overflow-hidden">
+          <img
+            ref={previewImgRef}
+            src={WORKS[0].img}
+            alt=""
+            className="w-full h-full object-cover grayscale"
+          />
+        </div>
+      </div>
     </section>
   );
 }

@@ -37,49 +37,105 @@ const FEATURES = [
 
 export default function FeaturesGrid() {
   const ref = useGSAP<HTMLElement>(() => {
-    gsap.from('.features-heading', {
-      y: 40,
-      opacity: 0,
-      duration: 1.1,
-      ease: 'power3.out',
+    // ── Heading timeline ───────────────────────────────────
+    const headingTl = gsap.timeline({
       scrollTrigger: {
         trigger: '.features-heading',
-        start: 'top 82%',
+        start: 'top 80%',
         toggleActions: 'play none none reverse',
       },
     });
 
+    headingTl
+      .from('.features-eyebrow', {
+        opacity: 0,
+        y: 10,
+        duration: 0.8,
+        ease: 'power2.out',
+      })
+      .from(
+        '.features-title-word',
+        {
+          opacity: 0,
+          y: 50,
+          duration: 1.1,
+          stagger: 0.1,
+          ease: 'expo.out',
+        },
+        '-=0.4',
+      )
+      .from(
+        '.features-desc',
+        {
+          opacity: 0,
+          y: 18,
+          duration: 0.9,
+          ease: 'power2.inOut',
+        },
+        '-=0.6',
+      );
+
+    // ── Divider draws in from left ─────────────────────────
+    gsap.from('.features-divider', {
+      scaleX: 0,
+      transformOrigin: 'left center',
+      duration: 1.4,
+      ease: 'expo.out',
+      scrollTrigger: {
+        trigger: '.features-divider',
+        start: 'top 88%',
+        toggleActions: 'play none none reverse',
+      },
+    });
+
+    // ── Cards stagger in ───────────────────────────────────
     gsap.from('.feature-card', {
-      y: 56,
       opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power3.out',
+      y: 60,
+      duration: 1.1,
+      stagger: 0.12,
+      ease: 'expo.out',
       scrollTrigger: {
         trigger: '.features-grid',
         start: 'top 78%',
         toggleActions: 'play none none reverse',
       },
     });
+
+    // ── Ghost number rises on hover ────────────────────────
+    gsap.utils.toArray<HTMLElement>('.feature-card').forEach((card) => {
+      const ghost = card.querySelector<HTMLElement>('.feature-ghost-num');
+      if (!ghost) return;
+
+      // Set initial state
+      gsap.set(ghost, { y: 12, opacity: 0.025 });
+
+      const enter = gsap.timeline({ paused: true });
+      enter.to(ghost, { y: 0, opacity: 0.07, duration: 0.55, ease: 'power2.out' });
+
+      card.addEventListener('mouseenter', () => enter.play());
+      card.addEventListener('mouseleave', () => enter.reverse());
+    });
   });
 
   return (
     <section ref={ref} className="py-40 px-[5vw] bg-black">
-
       {/* Heading block */}
       <div className="features-heading mb-24">
-        <span className="block text-[0.62rem] tracking-[0.34em] uppercase text-white/20 mb-6 font-medium">
+        <span className="features-eyebrow block text-[0.62rem] tracking-[0.34em] uppercase text-white/20 mb-6 font-medium">
           Capabilities
         </span>
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
           <h2 className="text-[clamp(3.5rem,8vw,7.5rem)] font-black tracking-[-0.045em] leading-[0.86] text-white">
-            Built<br />different.
+            {['Built', 'different.'].map((word, i) => (
+              <span key={i} className="features-title-word block">{word}</span>
+            ))}
           </h2>
           <div className="md:pb-3 flex flex-col gap-4 md:max-w-[280px]">
-            <p className="text-[0.85rem] text-white/30 leading-relaxed">
+            <p className="features-desc text-[0.85rem] text-white/30 leading-relaxed">
               A precise set of disciplines — each one executed to a standard the work demands.
             </p>
-            <div className="flex items-center gap-3">
+            <div className="features-desc flex items-center gap-3">
               <div className="w-6 h-px bg-white/15" />
               <span className="text-[0.6rem] tracking-[0.22em] uppercase text-white/20">
                 4 Disciplines
@@ -90,7 +146,7 @@ export default function FeaturesGrid() {
       </div>
 
       {/* Divider */}
-      <div className="w-full h-px bg-white/[0.07] mb-0" />
+      <div className="features-divider w-full h-px bg-white/[0.07] mb-0" />
 
       {/* Grid */}
       <div className="features-grid grid grid-cols-1 md:grid-cols-2">
@@ -104,9 +160,9 @@ export default function FeaturesGrid() {
             }}
             data-cursor-hover
           >
-            {/* Ghost number — large backdrop */}
+            {/* Ghost number */}
             <div
-              className="absolute bottom-0 right-6 font-black font-mono leading-none select-none pointer-events-none"
+              className="feature-ghost-num absolute bottom-0 right-6 font-black font-mono leading-none select-none pointer-events-none"
               style={{
                 fontSize: 'clamp(7rem, 12vw, 11rem)',
                 color: 'rgba(255,255,255,0.025)',
@@ -167,7 +223,7 @@ export default function FeaturesGrid() {
       </div>
 
       {/* Bottom divider */}
-      <div className="w-full h-px bg-white/[0.07]" />
+      <div className="features-divider w-full h-px bg-white/[0.07]" />
     </section>
   );
 }

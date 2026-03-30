@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
+import gsap from 'gsap';
+import ScrollTrigger from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function HeroScene() {
   const mountRef = useRef<HTMLDivElement>(null);
@@ -23,9 +27,9 @@ export default function HeroScene() {
       0.1,
       100,
     );
-    camera.position.z = 5;
+    camera.position.z = 7; // start further back — GSAP animates to 5
 
-    // ── Sparse ambient particles ──────────────────────────────
+    // ── Sparse ambient particles ─────────────────────────────
     const COUNT = 700;
     const positions = new Float32Array(COUNT * 3);
 
@@ -43,13 +47,13 @@ export default function HeroScene() {
       size: 0.016,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.2,
+      opacity: 0, // start invisible — GSAP fades in
     });
 
     const particles = new THREE.Points(geometry, material);
     scene.add(particles);
 
-    // ── Mouse parallax ───────────────────────────────────────
+    // ── Mouse parallax ────────────────────────────────────────
     const mouse = { x: 0, y: 0 };
     const camTarget = { x: 0, y: 0 };
 
@@ -60,7 +64,7 @@ export default function HeroScene() {
 
     window.addEventListener('mousemove', handleMouseMove);
 
-    // ── Resize ───────────────────────────────────────────────
+    // ── Resize ────────────────────────────────────────────────
     const handleResize = () => {
       if (!mount) return;
       camera.aspect = mount.clientWidth / mount.clientHeight;
@@ -70,7 +74,7 @@ export default function HeroScene() {
 
     window.addEventListener('resize', handleResize);
 
-    // ── Animation loop ───────────────────────────────────────
+    // ── Animation loop ────────────────────────────────────────
     const clock = new THREE.Clock();
     let rafId: number;
 
@@ -81,6 +85,7 @@ export default function HeroScene() {
       particles.rotation.y = t * 0.012;
       particles.rotation.x = t * 0.005;
 
+      // Mouse parallax — lerp toward target
       camTarget.x += (mouse.x * 0.35 - camTarget.x) * 0.025;
       camTarget.y += (mouse.y * 0.35 - camTarget.y) * 0.025;
       camera.position.x = camTarget.x;
@@ -92,11 +97,78 @@ export default function HeroScene() {
 
     animate();
 
-    // ── Cleanup ──────────────────────────────────────────────
+    // ── GSAP: intro + scroll parallax ────────────────────────
+    // All ScrollTrigger work waits for Lenis so scrollerProxy is active
+    let gsapCtx: gsap.Context;
+
+    const initGSAP = () => {
+      gsapCtx = gsap.context(() => {
+        // Camera pull-in on load
+        gsap.to(camera.position, {
+          z: 5,
+          duration: 2.2,
+          delay: 0.2,
+          ease: 'power2.inOut',
+        });
+
+        // Particles fade in
+        gsap.to(material, {
+          opacity: 0.2,
+          duration: 1.8,
+          delay: 0.4,
+          ease: 'power2.inOut',
+        });
+
+        // Scroll: camera zooms in slightly as user starts scrolling (cinematic)
+        gsap.to(camera.position, {
+          z: 4.2,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: '40vh top',
+            scrub: 2,
+          },
+        });
+
+        // Scroll: particles drift downward + fade out as user scrolls away
+        gsap.to(particles.position, {
+          y: -1.8,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: 'top top',
+            end: '45vh top',
+            scrub: 2,
+          },
+        });
+
+        gsap.to(material, {
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: '15vh top',
+            end: '50vh top',
+            scrub: 1.5,
+          },
+        });
+      });
+    };
+
+    if ((window as any).__lenis) {
+      initGSAP();
+    } else {
+      window.addEventListener('lenis:ready', initGSAP, { once: true });
+    }
+
+    // ── Cleanup ───────────────────────────────────────────────
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('lenis:ready', initGSAP);
+      gsapCtx?.revert();
       geometry.dispose();
       material.dispose();
       renderer.dispose();

@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav';
+import HeroCanvas from '../components/HeroCanvas';
+import HeroSection from '../components/HeroSection';
+import MarqueeTrack from '../components/MarqueeTrack';
+import TextReveal from '../components/TextReveal';
+import GalleryScroll from '../components/GalleryScroll';
+import StatsSection from '../components/StatsSection';
+import BentoFeatures from '../components/BentoFeatures';
+import ApproachSection from '../components/ApproachSection';
+import WorksList from '../components/WorksList';
+import ShowreelSection from '../components/ShowreelSection';
+import PricingSection from '../components/PricingSection';
+import CTASection from '../components/CTASection';
+import NoirFooter from '../components/NoirFooter';
+import CursorFollower from '../components/ui/CursorFollower';
+---
+
+<Layout title="Noir Motion — Dark Cinematic Studio">
+  <CursorFollower client:load />
+  <Nav client:load />
+
+  <!-- ── 01 Hero — Three.js canvas + animated title ──────── -->
+  <section class="relative h-screen overflow-hidden bg-black">
+    <!-- Subtle dot grid overlay -->
+    <div
+      class="absolute inset-0 pointer-events-none z-[1]"
+      style="
+        background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
+        background-size: 32px 32px;
+        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+      "
+    ></div>
+    <HeroCanvas client:load />
+    <HeroSection client:load />
+  </section>
+
+  <!-- ── 02 Marquee belt ──────────────────────────────────── -->
+  <div class="bg-black">
+    <MarqueeTrack client:load />
+  </div>
+
+  <!-- ── 03 Statement text reveal (char-level scrub) ─────── -->
+  <section class="bg-black">
+    <TextReveal
+      client:load
+      text="We craft cinematic digital experiences that blur the boundary between design and technology."
+    />
+  </section>
+
+  <!-- ── 04 Horizontal gallery scroll ────────────────────── -->
+  <GalleryScroll client:load />
+
+  <!-- ── 05 Stats / by the numbers ───────────────────────── -->
+  <StatsSection client:load />
+
+  <!-- ── 06 Bento capabilities grid ──────────────────────── -->
+  <BentoFeatures client:load />
+
+  <!-- ── 07 Approach — vertical timeline ─────────────────── -->
+  <ApproachSection client:load />
+
+  <!-- ── 08 Selected works list ───────────────────────────── -->
+  <section id="studio" class="bg-black">
+    <WorksList client:load />
+  </section>
+
+  <!-- ── 09 Showreel teaser ───────────────────────────────── -->
+  <ShowreelSection client:load />
+
+  <!-- ── 10 Pricing ───────────────────────────────────────── -->
+  <PricingSection client:load />
+
+  <!-- ── 11 CTA ────────────────────────────────────────────── -->
+  <CTASection client:load />
+
+  <!-- ── 12 Contact ───────────────────────────────────────── -->
+  <section
+    id="contact"
+    class="relative py-40 px-8 md:px-14 bg-black overflow-hidden"
+  >
+    <div
+      class="absolute -top-40 -left-40 w-[600px] h-[600px] rounded-full pointer-events-none"
+      style="background: radial-gradient(circle, rgba(255,255,255,0.012) 0%, transparent 70%);"
+    ></div>
+
+    <div class="contact-block relative z-10 max-w-2xl">
+      <span
+        class="contact-label block text-[0.62rem] tracking-[0.34em] uppercase text-white/20 mb-10 font-medium"
+      >
+        Contact
+      </span>
+      <h2
+        class="contact-heading font-black tracking-[-0.04em] leading-[0.88] text-white mb-12"
+        style="font-size: clamp(3rem, 7vw, 6rem);"
+      >
+        Start a<br />project.
+      </h2>
+      <a
+        href="mailto:hello@noirmotion.com"
+        class="contact-link inline-flex items-center gap-4 text-[0.7rem] tracking-[0.22em] uppercase text-white/35 hover:text-white transition-colors duration-500 group"
+      >
+        hello@noirmotion.com
+        <span class="inline-block group-hover:translate-x-2 transition-transform duration-500">→</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ── 13 Footer ─────────────────────────────────────────── -->
+  <NoirFooter client:load />
+
+  <script>
+    import gsap from 'gsap';
+    import ScrollTrigger from 'gsap/ScrollTrigger';
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const init = () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '#contact',
+          start: 'top 78%',
+          toggleActions: 'play none none reverse',
+        },
+      });
+
+      tl.from('#contact .contact-label', {
+        opacity: 0, y: 12, duration: 0.8, ease: 'power2.out',
+      })
+        .from(
+          '#contact .contact-heading',
+          { opacity: 0, y: 60, duration: 1.2, ease: 'expo.out' },
+          '-=0.4',
+        )
+        .from(
+          '#contact .contact-link',
+          { opacity: 0, y: 20, duration: 0.9, ease: 'power2.inOut' },
+          '-=0.6',
+        );
+    };
+
+    if ((window as any).__lenis) {
+      init();
+    } else {
+      window.addEventListener('lenis:ready', init, { once: true });
+    }
+  </script>
+</Layout>
