@@ -32,7 +32,7 @@ export default function RegisterCard() {
   return (
     <div
       ref={containerRef}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0e0e0e] px-4 py-16"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#030303] px-4 py-16"
     >
       {/* Ambient orbs */}
       <div data-orb="1" className="pointer-events-none absolute -left-32 -top-32 h-[500px] w-[500px] rounded-full bg-[#d394ff]/10 blur-[120px]" />

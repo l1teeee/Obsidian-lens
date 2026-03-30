@@ -64,7 +64,7 @@ export default function SocialProof() {
   return (
       <section
           ref={rootRef}
-          className="social-proof-section relative overflow-hidden border-y border-[#494847]/15 bg-[#0e0e0e] py-24"
+          className="social-proof-section relative overflow-hidden border-y border-[#494847]/15 bg-[#030303] py-24"
       >
         <div className="mx-auto max-w-[1440px] px-6 md:px-12">
           <p

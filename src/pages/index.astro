@@ -1,7 +1,7 @@
 ---
 import CRMLayout from '../layouts/CRMLayout.astro';
 import ObsidianNav from '../components/obsidian/ObsidianNav';
-import ObsidianHero from '../components/obsidian/ObsidianHero';
+import { HeroGeometric } from '../components/ui/shape-landing-hero';
 import SocialProof from '../components/obsidian/SocialProof';
 import PlatformSection from '../components/obsidian/PlatformSection';
 import AnalyticsSection from '../components/obsidian/AnalyticsSection';
@@ -17,7 +17,13 @@ import CursorFollower from '../components/ui/CursorFollower';
   <ObsidianNav client:load />
 
   <main class="obsidian-page">
-    <ObsidianHero client:load />
+    <HeroGeometric
+      client:load
+      badge="Editorial Intelligence"
+      title1="Your social universe."
+      title2="One quiet system."
+      description="A refined command layer for creative brands to plan, track, and synchronize Instagram, LinkedIn, and Facebook with clarity."
+    />
     <SocialProof client:load />
     <PlatformSection client:load />
     <AnalyticsSection client:load />

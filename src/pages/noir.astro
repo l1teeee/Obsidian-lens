@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav';
 import HeroCanvas from '../components/HeroCanvas';
-import HeroSection from '../components/HeroSection';
+import { HeroGeometric } from '../components/ui/shape-landing-hero';
 import MarqueeTrack from '../components/MarqueeTrack';
 import TextReveal from '../components/TextReveal';
 import GalleryScroll from '../components/GalleryScroll';
@@ -21,20 +21,10 @@ import CursorFollower from '../components/ui/CursorFollower';
   <CursorFollower client:load />
   <Nav client:load />
 
-  <!-- ── 01 Hero — Three.js canvas + animated title ──────── -->
+  <!-- ── 01 Hero — Three.js canvas + geometric shapes hero ── -->
   <section class="relative h-screen overflow-hidden bg-black">
-    <!-- Subtle dot grid overlay -->
-    <div
-      class="absolute inset-0 pointer-events-none z-[1]"
-      style="
-        background-image: radial-gradient(circle, rgba(255,255,255,0.055) 1px, transparent 1px);
-        background-size: 32px 32px;
-        mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
-        -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
-      "
-    ></div>
     <HeroCanvas client:load />
-    <HeroSection client:load />
+    <HeroGeometric client:load />
   </section>
 
   <!-- ── 02 Marquee belt ──────────────────────────────────── -->

@@ -128,7 +128,7 @@ export default function ObsidianFooter() {
   return (
       <footer
           ref={footerRef}
-          className="border-t border-[#494847]/15 bg-[#0e0e0e]"
+          className="border-t border-[#494847]/15 bg-[#030303]"
       >
         <div className="mx-auto max-w-[1440px] px-6 py-24 md:px-12">
           <div className="flex flex-col items-start justify-between gap-14 md:flex-row">

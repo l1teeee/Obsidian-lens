@@ -91,13 +91,10 @@ export default function ObsidianNav() {
                 style={{ opacity: 0 }}
                 className={`relative transition-all duration-500 ${
                     scrolled
-                        ? 'border-b border-[#494847]/20 bg-[#0e0e0e]/72 shadow-[0_10px_40px_rgba(0,0,0,0.22)] backdrop-blur-2xl'
-                        : 'border-b border-transparent bg-[#0e0e0e]/92 backdrop-blur-xl'
+                        ? 'border-b border-white/[0.06] bg-[#030303]/80 backdrop-blur-2xl'
+                        : 'border-b border-transparent bg-transparent'
                 }`}
             >
-                <div className="pointer-events-none absolute inset-0 overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.01),transparent_38%,transparent)]" />
-                </div>
 
                 <div className="relative z-10 mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-12">
                     <a
