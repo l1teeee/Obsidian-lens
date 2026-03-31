@@ -99,9 +99,9 @@ export default function ObsidianNav() {
                     href="#"
                     data-nav="logo"
                     style={{ opacity: 0 }}
-                    className="font-headline text-[1rem] font-bold tracking-tight text-[#f3efef]"
+                    className="flex items-center"
                 >
-                    OL
+                    <img src="/favicon.svg" alt="Logo" className="h-8 w-8" />
                 </a>
 
                 <div className="hidden items-center gap-8 md:flex">

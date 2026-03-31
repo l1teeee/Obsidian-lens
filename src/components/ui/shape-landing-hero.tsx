@@ -170,20 +170,6 @@ function HeroGeometric({
                         Watch Demo
                     </button>
                 </motion.div>
-
-                {/* Stats */}
-                <motion.div
-                    variants={fade(4)} initial="hidden" animate="visible"
-                    className="flex items-center gap-10 md:gap-14"
-                >
-                    <div className="h-px w-12 bg-gradient-to-r from-transparent to-white/10 hidden md:block" />
-                    <StatPill value="12k+" label="Brands" delay={1.4} />
-                    <div className="w-px h-8 bg-white/[0.06]" />
-                    <StatPill value="4" label="Platforms" delay={1.5} />
-                    <div className="w-px h-8 bg-white/[0.06]" />
-                    <StatPill value="98%" label="Satisfaction" delay={1.6} />
-                    <div className="h-px w-12 bg-gradient-to-l from-transparent to-white/10 hidden md:block" />
-                </motion.div>
             </div>
 
             {/* ── Bottom fade ── */}
