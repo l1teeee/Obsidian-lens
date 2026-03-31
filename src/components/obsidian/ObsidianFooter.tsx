@@ -62,7 +62,7 @@ export default function ObsidianFooter() {
                 <span className="absolute inline-flex h-full w-full rounded-full bg-[#d394ff] opacity-40 animate-ping" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#d394ff]" />
               </span>
-              <span className="text-lg font-bold tracking-tight text-[#e5e2e1]">Obsidian Lens</span>
+              <span className="text-lg font-bold tracking-tight text-[#e5e2e1]">Vielinks</span>
             </div>
             <p className="text-sm leading-relaxed text-[#adaaaa]/50">
               Defining the standard for creative CRM software. Building the bridge between data and artistry.
@@ -101,7 +101,7 @@ export default function ObsidianFooter() {
         className="mx-auto flex max-w-[1440px] flex-col items-center justify-between gap-4 border-t border-white/[0.04] px-6 py-7 md:flex-row md:px-12"
       >
         <span className="text-[0.65rem] uppercase tracking-[0.14em] text-white/20">
-          © {new Date().getFullYear()} Obsidian Lens. All rights reserved.
+          © {new Date().getFullYear()} Vielinks. All rights reserved.
         </span>
         <div className="flex gap-6">
           {['Privacy Policy', 'Terms of Service', 'API Status'].map((item) => (

@@ -167,7 +167,7 @@ export default function AnalyticsSection() {
                         style={{ opacity: 0 }}
                         className="mt-7 max-w-[560px] text-[1.02rem] font-light leading-8 text-[#adaaaa] md:text-[1.08rem]"
                     >
-                        Obsidian Lens translates complex social signals into editorial
+                        Vielinks translates complex social signals into editorial
                         insights. Identify trend-breakouts before they peak and optimize
                         your posting schedule with surgical precision.
                     </p>

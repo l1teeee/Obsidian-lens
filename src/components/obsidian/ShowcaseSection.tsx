@@ -263,7 +263,7 @@ export default function ShowcaseSection() {
             </span>
           </h2>
           <p data-sc="sub" style={{ opacity: 0 }} className="mt-6 text-[1.02rem] font-light leading-8 text-[#adaaaa]">
-            From deep analytics to AI-powered scheduling — Obsidian Lens puts your entire social universe in one cinematic interface.
+            From deep analytics to AI-powered scheduling — Vielinks puts your entire social universe in one cinematic interface.
           </p>
         </div>
 
