@@ -57,46 +57,48 @@ export default function Nav() {
   }, []);
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 inset-x-0 z-50 flex items-center justify-between px-8 md:px-14 py-6 transition-all duration-700 ${
-        scrolled
-          ? 'bg-black/80 backdrop-blur-xl border-b border-white/[0.05]'
-          : ''
-      }`}
-    >
-      {/* Logo */}
-      <a
-        href="/noir"
-        className="nav-item text-white text-[0.68rem] tracking-[0.32em] uppercase font-bold"
+    <div className="fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
+      <nav
+        ref={navRef}
+        className={`pointer-events-auto flex items-center justify-between gap-10 px-6 py-3 rounded-full border transition-all duration-700 ${
+          scrolled
+            ? 'bg-white/10 backdrop-blur-2xl border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+            : 'bg-white/[0.07] backdrop-blur-xl border-white/[0.15] shadow-[0_4px_24px_rgba(0,0,0,0.3)]'
+        }`}
       >
-        NM
-      </a>
+        {/* Logo */}
+        <a
+          href="/"
+          className="nav-item text-white text-[0.68rem] tracking-[0.32em] uppercase font-bold"
+        >
+          NM
+        </a>
 
-      {/* Links */}
-      <ul className="hidden md:flex items-center gap-9">
-        {[['#work', 'Work'], ['#approach', 'Process'], ['#pricing', 'Pricing'], ['#contact', 'Contact']].map(
-          ([href, label]) => (
-            <li key={label} className="nav-item">
-              <a
-                href={href}
-                className="text-white/30 hover:text-white text-[0.62rem] tracking-[0.28em] uppercase transition-colors duration-400"
-              >
-                {label}
-              </a>
-            </li>
-          ),
-        )}
-      </ul>
+        {/* Links */}
+        <ul className="hidden md:flex items-center gap-7">
+          {[['#work', 'Work'], ['#approach', 'Process'], ['#pricing', 'Pricing'], ['#contact', 'Contact']].map(
+            ([href, label]) => (
+              <li key={label} className="nav-item">
+                <a
+                  href={href}
+                  className="text-white/35 hover:text-white text-[0.62rem] tracking-[0.28em] uppercase transition-colors duration-300"
+                >
+                  {label}
+                </a>
+              </li>
+            ),
+          )}
+        </ul>
 
-      {/* CTA */}
-      <a
-        href="#contact"
-        className="nav-item hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-white/40 text-[0.6rem] tracking-[0.22em] uppercase hover:border-white/30 hover:text-white/70 transition-all duration-400"
-        data-cursor-hover
-      >
-        Start a Project
-      </a>
-    </nav>
+        {/* CTA */}
+        <a
+          href="#contact"
+          className="nav-item hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 text-white/40 text-[0.6rem] tracking-[0.22em] uppercase hover:border-white/30 hover:text-white/70 hover:bg-white/[0.05] transition-all duration-300"
+          data-cursor-hover
+        >
+          Start a Project
+        </a>
+      </nav>
+    </div>
   );
 }

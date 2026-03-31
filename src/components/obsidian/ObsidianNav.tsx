@@ -85,63 +85,49 @@ export default function ObsidianNav() {
     };
 
     return (
-        <nav ref={navRef} className="fixed left-0 top-0 z-50 w-full">
+        <nav ref={navRef} className="fixed top-6 inset-x-0 z-50 flex justify-center pointer-events-none">
             <div
                 data-nav="inner"
                 style={{ opacity: 0 }}
-                className={`relative transition-all duration-500 ${
+                className={`pointer-events-auto flex items-center justify-between gap-10 px-6 py-3 rounded-full border transition-all duration-500 ${
                     scrolled
-                        ? 'border-b border-white/[0.06] bg-[#030303]/80 backdrop-blur-2xl'
-                        : 'border-b border-transparent bg-transparent'
+                        ? 'bg-white/[0.07] backdrop-blur-2xl border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.5)]'
+                        : 'bg-white/[0.05] backdrop-blur-xl border-white/[0.14] shadow-[0_4px_24px_rgba(0,0,0,0.3)]'
                 }`}
             >
+                <a
+                    href="#"
+                    data-nav="logo"
+                    style={{ opacity: 0 }}
+                    className="font-headline text-[1rem] font-bold tracking-tight text-[#f3efef]"
+                >
+                    OL
+                </a>
 
-                <div className="relative z-10 mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-12">
-                    <a
-                        href="#"
-                        data-nav="logo"
-                        style={{ opacity: 0 }}
-                        className="group relative flex items-center gap-3"
-                    >
-                        <div className="flex flex-col leading-none">
-              <span className="font-headline text-[1.02rem] font-bold tracking-tight text-[#f3efef]">
-                Obsidian Lens
-              </span>
-                            <span className="mt-1 text-[0.6rem] uppercase tracking-[0.24em] text-[#8d8888]">
-                Editorial OS
-              </span>
-                        </div>
-                    </a>
+                <div className="hidden items-center gap-8 md:flex">
+                    {links.map((link) => (
+                        <a
+                            key={link}
+                            data-nav="link"
+                            href={`#${link}`}
+                            onClick={handleScrollTo(link)}
+                            style={{ opacity: 0 }}
+                            className="group relative text-[0.7rem] tracking-[0.12em] uppercase font-medium text-[#adaaaa] transition-colors duration-300 hover:text-[#f3e6ff]"
+                        >
+                            <span>{link}</span>
+                            <span className="absolute left-0 top-full mt-1 h-px w-0 bg-[#d394ff] transition-all duration-300 group-hover:w-full" />
+                        </a>
+                    ))}
+                </div>
 
-                    <div className="hidden items-center gap-8 md:flex">
-                        {links.map((link) => (
-                            <a
-                                key={link}
-                                data-nav="link"
-                                href={`#${link}`}
-                                onClick={handleScrollTo(link)}
-                                style={{ opacity: 0 }}
-                                className="group relative text-sm font-medium text-[#adaaaa] transition-colors duration-300 hover:text-[#f3e6ff]"
-                            >
-                                <span>{link}</span>
-                                <span className="absolute left-0 top-full mt-1 h-px w-0 bg-[#d394ff] transition-all duration-300 group-hover:w-full" />
-                            </a>
-                        ))}
-                    </div>
-
-                    <div
-                        data-nav="actions"
-                        style={{ opacity: 0 }}
-                        className="flex items-center gap-3 md:gap-5"
-                    >
-                        <button type="button" className="hidden text-sm font-medium text-[#adaaaa] md:block cursor-default opacity-50">
-                            Login
-                        </button>
-
-                        <button type="button" className="rounded-xl bg-[#d394ff] px-5 py-2.5 text-sm font-bold text-[#4a0076] shadow-[0_0_24px_rgba(211,148,255,0.18)] cursor-default opacity-70">
-                            Get Started
-                        </button>
-                    </div>
+                <div
+                    data-nav="actions"
+                    style={{ opacity: 0 }}
+                    className="flex items-center gap-3"
+                >
+                    <button type="button" className="rounded-full bg-[#d394ff] px-4 py-2 text-[0.65rem] tracking-[0.1em] uppercase font-bold text-[#4a0076] shadow-[0_0_20px_rgba(211,148,255,0.2)] cursor-default opacity-80">
+                        Login
+                    </button>
                 </div>
             </div>
         </nav>

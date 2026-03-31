@@ -45,7 +45,7 @@ export default function AnalyticsSection() {
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: sectionRef.current,
-                    start: 'top 78%',
+                    start: 'top 72%',
                     toggleActions: 'play none none none',
                     once: true,
                 },
@@ -53,62 +53,52 @@ export default function AnalyticsSection() {
             });
 
             tl
-                .to('[data-a="orb-1"]', { opacity: 1, duration: 1.2 }, 0)
-                .to('[data-a="orb-2"]', { opacity: 1, duration: 1.2 }, 0.2)
-
-                .fromTo(
-                    '[data-a="eyebrow"]',
-                    { opacity: 0, y: 18, filter: 'blur(10px)' },
-                    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5 },
-                    0.1
+                .to('[data-a="orb-1"]', { opacity: 1, duration: 0.8 }, 0)
+                .to('[data-a="orb-2"]', { opacity: 1, duration: 0.8 }, 0.1)
+                .fromTo('[data-a="eyebrow"]',
+                    { opacity: 0, y: 12, filter: 'blur(8px)' },
+                    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4 },
+                    0.05
                 )
-                .fromTo(
-                    '[data-a="title"]',
-                    { opacity: 0, y: 28, filter: 'blur(14px)' },
-                    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.85 },
+                .fromTo('[data-a="title"]',
+                    { opacity: 0, y: 20, filter: 'blur(10px)' },
+                    { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55 },
+                    '-=0.2'
+                )
+                .fromTo('[data-a="desc"]',
+                    { opacity: 0, y: 14 },
+                    { opacity: 1, y: 0, duration: 0.45 },
+                    '-=0.3'
+                )
+                .fromTo('[data-a="feature"]',
+                    { opacity: 0, y: 12 },
+                    { opacity: 1, y: 0, duration: 0.38, stagger: 0.06 },
                     '-=0.25'
                 )
-                .fromTo(
-                    '[data-a="desc"]',
-                    { opacity: 0, y: 18 },
-                    { opacity: 1, y: 0, duration: 0.65 },
-                    '-=0.45'
-                )
-                .fromTo(
-                    '[data-a="feature"]',
-                    { opacity: 0, y: 16 },
-                    { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
-                    '-=0.35'
-                )
-                .fromTo(
-                    '[data-a="chart-shell"]',
-                    { opacity: 0, y: 36, scale: 0.985, filter: 'blur(14px)' },
-                    { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.9 },
-                    '-=0.75'
-                )
-                .fromTo(
-                    '[data-a="metric"]',
-                    { opacity: 0, y: 14 },
-                    { opacity: 1, y: 0, duration: 0.45, stagger: 0.05 },
+                .fromTo('[data-a="chart-shell"]',
+                    { opacity: 0, y: 28, scale: 0.988, filter: 'blur(12px)' },
+                    { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.65 },
                     '-=0.55'
                 )
-                .fromTo(
-                    '[data-a="bar-wrap"]',
-                    { opacity: 0, y: 18 },
-                    { opacity: 1, y: 0, duration: 0.45, stagger: 0.07 },
-                    '-=0.35'
+                .fromTo('[data-a="metric"]',
+                    { opacity: 0, y: 10 },
+                    { opacity: 1, y: 0, duration: 0.35, stagger: 0.04 },
+                    '-=0.4'
                 )
-                .fromTo(
-                    '[data-a="bar-fill"]',
-                    { scaleY: 0, transformOrigin: 'bottom center' },
-                    { scaleY: 1, duration: 0.75, stagger: 0.08, ease: 'power4.out' },
-                    '-=0.45'
-                )
-                .fromTo(
-                    '[data-a="day"]',
-                    { opacity: 0, y: 8 },
+                .fromTo('[data-a="bar-wrap"]',
+                    { opacity: 0, y: 12 },
                     { opacity: 1, y: 0, duration: 0.35, stagger: 0.05 },
-                    '-=0.55'
+                    '-=0.25'
+                )
+                .fromTo('[data-a="bar-fill"]',
+                    { scaleY: 0, transformOrigin: 'bottom center' },
+                    { scaleY: 1, duration: 0.6, stagger: 0.06, ease: 'power4.out' },
+                    '-=0.3'
+                )
+                .fromTo('[data-a="day"]',
+                    { opacity: 0, y: 6 },
+                    { opacity: 1, y: 0, duration: 0.28, stagger: 0.04 },
+                    '-=0.4'
                 )
                 .add(() => {
                     gsap.to('[data-a="orb-1"]', {

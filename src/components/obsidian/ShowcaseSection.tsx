@@ -203,19 +203,19 @@ export default function ShowcaseSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
+          start: 'top 72%',
           toggleActions: 'play none none none',
           once: true,
         },
         defaults: { ease: 'power3.out' },
       });
 
-      tl.fromTo('[data-sc="orb"]', { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0)
-        .fromTo('[data-sc="eyebrow"]', { opacity: 0, y: 16, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5 }, 0.1)
-        .fromTo('[data-sc="title"]', { opacity: 0, y: 24, filter: 'blur(14px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8 }, '-=0.25')
-        .fromTo('[data-sc="sub"]', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.6 }, '-=0.45')
-        .fromTo('[data-sc="tabs"]', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5 }, '-=0.3')
-        .fromTo('[data-sc="window"]', { opacity: 0, y: 36, scale: 0.985, filter: 'blur(14px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 1.0 }, '-=0.35');
+      tl.fromTo('[data-sc="orb"]', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0)
+        .fromTo('[data-sc="eyebrow"]', { opacity: 0, y: 12, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4 }, 0.05)
+        .fromTo('[data-sc="title"]', { opacity: 0, y: 20, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55 }, '-=0.2')
+        .fromTo('[data-sc="sub"]', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.3')
+        .fromTo('[data-sc="tabs"]', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.35 }, '-=0.2')
+        .fromTo('[data-sc="window"]', { opacity: 0, y: 28, scale: 0.988, filter: 'blur(10px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.65 }, '-=0.25');
     }, sectionRef);
 
     return () => ctx.revert();

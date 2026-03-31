@@ -17,7 +17,7 @@ export default function HeroText() {
           y: 80,
           opacity: 0,
           duration: 1,
-          stagger: 0.12,
+          stagger: 0.20,
           ease: 'power3.out',
         },
         '-=0.5',

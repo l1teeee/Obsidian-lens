@@ -78,19 +78,19 @@ export default function PricingSection() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 82%',
+          start: 'top 72%',
           toggleActions: 'play none none none',
           once: true,
         },
         defaults: { ease: 'power3.out' },
       });
 
-      tl.fromTo('[data-pr="orb"]', { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0)
-        .fromTo('[data-pr="eyebrow"]', { opacity: 0, y: 16, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.5 }, 0.1)
-        .fromTo('[data-pr="title"]', { opacity: 0, y: 24, filter: 'blur(14px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.8 }, '-=0.25')
-        .fromTo('[data-pr="sub"]', { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.4')
-        .fromTo('[data-pr="card"]', { opacity: 0, y: 32, scale: 0.985, filter: 'blur(10px)' }, { opacity: 1, y: 0, scale: 1, filter: 'blur(0px)', duration: 0.75, stagger: 0.1 }, '-=0.3')
-        .fromTo('[data-pr="note"]', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.2');
+      tl.fromTo('[data-pr="orb"]', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 0)
+        .fromTo('[data-pr="eyebrow"]', { opacity: 0, y: 12, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4 }, 0.05)
+        .fromTo('[data-pr="title"]', { opacity: 0, y: 20, filter: 'blur(10px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55 }, '-=0.2')
+        .fromTo('[data-pr="sub"]', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, '-=0.3')
+        .fromTo('[data-pr="card"]', { opacity: 0, y: 24, scale: 0.988 }, { opacity: 1, y: 0, scale: 1, duration: 0.55, stagger: 0.08 }, '-=0.25')
+        .fromTo('[data-pr="note"]', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.35 }, '-=0.15');
     }, sectionRef);
 
     return () => ctx.revert();
